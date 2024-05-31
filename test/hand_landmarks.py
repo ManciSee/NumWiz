@@ -30,6 +30,8 @@ class HandDetector():
         img = cv2.flip(img, 1)
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
+        
+        predicted_classes = []
 
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
@@ -55,15 +57,22 @@ class HandDetector():
                     outputs = self.hand_classifier(landmarks)
                     probabilities = torch.softmax(outputs, dim=1)
                     predicted_class = torch.argmax(probabilities, dim=1).item()
-                    confidence = probabilities[0][predicted_class].item() * 100  # Convert to percentage
+                    confidence = probabilities[0][predicted_class].item() * 100  
+                    predicted_classes.append(predicted_class)
                     print(f"Predicted class: {predicted_class}, Confidence: {confidence:.2f}%")
                     
                     label = f"{predicted_class}: {confidence:.2f}%"
+                    
                     label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, 0.7, 2)
                     label_x, label_y = x_min, y_min - 10
                     cv2.rectangle(img, (label_x, label_y - label_size[1] - 10), (label_x + label_size[0], label_y + 5), (0, 255, 0), cv2.FILLED)
                     cv2.putText(img, label, (label_x, label_y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
                     cv2.rectangle(img, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
+
+            if len(predicted_classes) > 1:
+                total_class_value = sum(predicted_classes)
+                print(f"Total class value (sum of predicted classes): {total_class_value}")
+                cv2.putText(img, f"Total: {total_class_value}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
         return img
 
@@ -81,7 +90,7 @@ class HandDetector():
         return lmList
 
 def main():
-    cap = cv2.VideoCapture(1)  # 0 for webcam, 1 for external webcam
+    cap = cv2.VideoCapture(1)  
     detector = HandDetector()
 
     while True:
