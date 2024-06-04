@@ -6,19 +6,15 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
 import ast
+import sys
+import matplotlib.pyplot as plt
 
-class HandModel(nn.Module):
-    def __init__(self):
-        super(HandModel, self).__init__()
-        self.fc1 = nn.Linear(42, 128)
-        self.fc2 = nn.Linear(128, 64)
-        self.fc3 = nn.Linear(64, 6)  
+sys.path.append('..')
 
-    def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
-        return x
+# Model
+from model.MLP_CSV import HandModel
+
+
 
 # Loading data
 hand_data = pd.read_csv('../synthetic.csv')
@@ -57,6 +53,10 @@ optimizer = optim.SGD(MLP_model.parameters(), lr=learning_rate)
 epochs = 100
 validation_loss_min = np.Inf
 
+train_losses = []
+validation_losses = []
+accuracies = []
+
 for epoch in range(epochs):
     training_loss = 0.0
     validation_loss = 0.0
@@ -83,11 +83,16 @@ for epoch in range(epochs):
     training_loss = training_loss / len(train_loader.dataset)
     validation_loss = validation_loss / len(test_loader.dataset)
 
+    train_losses.append(training_loss)
+    validation_losses.append(validation_loss)
+
+
     print(f'Epoch: {epoch+1}, Training Loss: {training_loss:.6f}, Validation Loss: {validation_loss:.6f}')
     if validation_loss <= validation_loss_min:
         print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(validation_loss_min, validation_loss))
         torch.save(MLP_model.state_dict(), 'weights/model_CSV.pth')
         validation_loss_min = validation_loss
+    
 
 # Testing the model
 MLP_model.eval()
@@ -121,3 +126,16 @@ for i in range(6):
 
 print('Test Accuracy (Overall): %2d%% (%2d/%2d)' % (
     100. * np.sum(class_correct) / np.sum(class_total), np.sum(class_correct), np.sum(class_total)))
+
+# Alla fine dell'addestramento, crea i grafici
+plt.figure(figsize=(10, 5))
+
+# Grafico delle curve di loss
+plt.plot(train_losses, label='Training Loss')
+plt.plot(validation_losses, label='Validation Loss')
+plt.xlabel('Epochs')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.show()
+
