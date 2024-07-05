@@ -14,8 +14,6 @@ sys.path.append('..')
 # Model
 from model.MLP_CSV import HandModel
 
-
-
 # Loading data
 hand_data = pd.read_csv('../synthetic.csv')
 
@@ -86,7 +84,6 @@ for epoch in range(epochs):
     train_losses.append(training_loss)
     validation_losses.append(validation_loss)
 
-
     print(f'Epoch: {epoch+1}, Training Loss: {training_loss:.6f}, Validation Loss: {validation_loss:.6f}')
     if validation_loss <= validation_loss_min:
         print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model ...'.format(validation_loss_min, validation_loss))
@@ -127,10 +124,8 @@ for i in range(6):
 print('Test Accuracy (Overall): %2d%% (%2d/%2d)' % (
     100. * np.sum(class_correct) / np.sum(class_total), np.sum(class_correct), np.sum(class_total)))
 
-# Alla fine dell'addestramento, crea i grafici
 plt.figure(figsize=(10, 5))
 
-# Grafico delle curve di loss
 plt.plot(train_losses, label='Training Loss')
 plt.plot(validation_losses, label='Validation Loss')
 plt.xlabel('Epochs')
