@@ -23,7 +23,7 @@ class HandDetector():
 
         self.hand_classifier = HandModel()
         device = torch.device('cpu') 
-        self.hand_classifier.load_state_dict(torch.load("./Training/weights/model_CSV.pth", map_location=device))  
+        self.hand_classifier.load_state_dict(torch.load("../training/weights/model_CSV.pth", map_location=device))  
         self.hand_classifier.eval()  
 
     def findHands(self, img, draw=True):
