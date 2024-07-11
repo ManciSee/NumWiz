@@ -1,0 +1,3 @@
+opencv-python
+mediapipe
+split-folders
