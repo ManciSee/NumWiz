@@ -57,7 +57,7 @@ cd NumWiz/Training
 python3 train_resnet18.py
 python3 train_resnet34.py
 ```
-> ❗️ If you want to use the Hagrid dataset, you can use our version with approximately 2000 images for training and 1000 for testing. Otherwise, if you need more or fewer images, you'll need to download the official dataset and then run the ```crop_hagrid``` script, selecting the desired number of images.
+> ❗️ If you want to use the Hagrid dataset, you can use [our version](https://www.kaggle.com/datasets/mancisee2/splitted-hagrid/) with approximately 2000 images for training and 1000 for testing. Otherwise, if you need more or fewer images, you'll need to download the official dataset and then run the ```crop_hagrid``` script, selecting the desired number of images.
 
 ## 👨🏼‍💻 Testing
 To Test the three models implemented in this project, you need to execute one of the following commands, depending on the model you want to Test (if you want to test the models after retraining, you need to change the weight paths):
@@ -78,13 +78,9 @@ python3 hand_resnet34_hagrid.py
 
 ## 📀 Demo
 
-
 https://github.com/ManciSee/NumWiz/assets/80248296/7e40ea88-5d49-4aac-90e0-be4e71b24d24
 
-
 https://github.com/ManciSee/NumWiz/assets/80248296/a1d5a988-3ae8-4fb9-bd8c-af42e933411b
-
-
 
 ## 👥 Authors
 <a href="https://github.com/ManciSee">
