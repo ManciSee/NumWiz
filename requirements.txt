@@ -1,3 +1,10 @@
 opencv-python
 mediapipe
 split-folders
+torch
+seaborn
+numpy
+pandas
+tqdm
+matplotlib
+scikit-learn
