@@ -40,6 +40,8 @@ python3 synthetic_data.py
 cd NumWiz/Training
 python3 train_csv.py
 ```
+> The ```synthetic_dataset.csv``` is located in https://www.kaggle.com/datasets/mancisee/synthetic-landmarks
+
 ### 🕳️ ResNet18 and ResNet34
 - Before training the models, you need to create the hand images dataset. You have to recording video of your hands and run this script to collect the frames:
 ```bash
@@ -58,6 +60,8 @@ python3 train_resnet18.py
 python3 train_resnet34.py
 ```
 > ❗️ If you want to use the Hagrid dataset, you can use [our version](https://www.kaggle.com/datasets/mancisee2/splitted-hagrid/) with approximately 2000 images for training and 1000 for testing. Otherwise, if you need more or fewer images, you'll need to download the official dataset and then run the ```crop_hagrid.py``` script, selecting the desired number of images.
+
+> Our hands dataset can be found here https://www.kaggle.com/datasets/mancisee/hands-cropped-split/data
 
 ## 👨🏼‍💻 Testing
 To Test the three models implemented in this project, you need to execute one of the following commands, depending on the model you want to Test (if you want to test the models after retraining, you need to change the weight paths):
